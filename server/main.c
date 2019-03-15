@@ -77,19 +77,46 @@ int tun_init() {
 		return -1;
 	}
 
-
 	// enable interface and net
 	system("ifconfig over6 " ADDRESS_PREFIX ".1 netmask 255.255.255.0 up");
 	system("iptables -t nat -A POSTROUTING -s " ADDRESS_PREFIX ".0/24 -j MASQUERADE");
+}
 
+int epoll_init() {
+}
+
+int server_fd = -1;
+int tun_fd = -1;
+int epoll_fd = -1;
+
+
+void clean() {
+	if (server_fd != -1) {
+		close(server_fd):
+	}
+	if (tun_fd != -1) {
+		close(tun_fd);
+	}
 }
 
 int main() {
-	int fd;
-	if ((fd = socket_init()) < 0) {
+	int server_fd;
+	if ((server_fd = socket_init()) < 0) {
+		clean();
 		exit(1);
 	}
 	printf("server fd = %d\n", fd);
 
-	tun_init();
+	int tun_fd;
+	if ((tun_fd = tun_init()) < 0) {
+		clean();
+		exit(1);
+	}
+
+	int epoll_fd;
+	if ((epoll_fd = epoll_init()) < 0) {
+		clean();
+		exit(1);
+	}
+
 }
