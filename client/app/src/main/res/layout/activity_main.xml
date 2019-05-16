@@ -7,12 +7,88 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="68dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Server IP"
+        app:layout_constraintBottom_toBottomOf="@+id/server_ip"
+        app:layout_constraintEnd_toStartOf="@+id/server_ip"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/server_ip" />
+
+    <EditText
+        android:id="@+id/server_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="2607:5501:3000:f36::2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="77dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="Server Port"
+        app:layout_constraintBottom_toBottomOf="@+id/server_port"
+        app:layout_constraintEnd_toStartOf="@+id/server_port"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/server_port"
+        app:layout_constraintVertical_bias="0.56" />
+
+    <EditText
+        android:id="@+id/server_port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="8192"
+        app:layout_constraintEnd_toEndOf="@+id/server_ip"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/server_ip"
+        app:layout_constraintTop_toBottomOf="@+id/server_ip" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="205dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="36dp"
+        android:text="Confirm"
+        app:layout_constraintEnd_toEndOf="@+id/server_port"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/server_port"
+        app:layout_constraintTop_toBottomOf="@+id/server_port" />
+
+    <Button
+        android:id="@+id/connect"
+        android:layout_width="205dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:text="Connect"
+        app:layout_constraintEnd_toEndOf="@+id/confirm"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/confirm"
+        app:layout_constraintTop_toBottomOf="@+id/confirm" />
+
+    <TextView
+        android:id="@+id/information"
+        android:layout_width="310dp"
+        android:layout_height="252dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/confirm"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/confirm"
+        app:layout_constraintTop_toBottomOf="@+id/connect" />
 
 </android.support.constraint.ConstraintLayout>
