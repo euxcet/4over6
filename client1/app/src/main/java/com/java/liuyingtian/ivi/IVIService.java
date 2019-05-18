@@ -2,7 +2,10 @@ package com.java.liuyingtian.ivi;
 
 import android.content.Intent;
 import android.net.VpnService;
+import android.os.Handler;
+import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.support.v4.content.LocalBroadcastManager;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,9 +15,11 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class IVIService extends VpnService {
     private Timer timer;
+    private TimerTask timerTask;
     private String serverIp;
     private String serverPort;
     private String localIp;
@@ -29,6 +34,15 @@ public class IVIService extends VpnService {
     private DataInputStream readStream;
 
 
+    private long runtime = 0;//运行时长
+    private long in_bytes_per_second;//每秒下载字节数
+    private long out_bytes_per_second;//每秒上传字节数
+    private long in_packets;//下载包数
+    private long out_packets;//上传包数
+    private long in_bytes;//下载总字节数
+    private long out_bytes;//上传总字节数
+
+
     private byte[] readBytes(int length) throws IOException{
         byte[] bytes = new byte[length];
         int offset = 0;
@@ -40,8 +54,22 @@ public class IVIService extends VpnService {
         return bytes;
     }
 
+    private int getInt(DataInputStream dataInputStream) throws  IOException {
+        int a = dataInputStream.read();
+        int b = dataInputStream.read();
+        int c = dataInputStream.read();
+        int d = dataInputStream.read();
+        return ((d*256+c)*256+b)*256+a;
+    }
+
+    private long getBytes(DataInputStream dataInputStream) throws IOException{
+        long a = (long)getInt(dataInputStream);
+        long b = (long)getInt(dataInputStream);
+        return (b<<32)+a;
+    }
+
     private int readInt() throws IOException{
-        return readStream.readInt()
+        return readStream.readInt();
     }
 
     private void writeInt(int data) throws  IOException{
@@ -66,17 +94,40 @@ public class IVIService extends VpnService {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flag, int startId){
-        if(intent.getStringExtra("action").equals("start")){
-            serverIp = intent.getStringExtra("serverIp");
-            serverPort = intent.getStringExtra("serverPort");
-            localIp = intent.getStringExtra("localIp");
-            startService();
-        }
-        else if(intent.getStringExtra("action").equals("stop")){
-            stopService();
-        }
+    public int onStartCommand(final Intent intent, int flag, int startId){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(intent.getStringExtra("action").equals("start")){
+                    serverIp = intent.getStringExtra("serverIp");
+                    serverPort = intent.getStringExtra("serverPort");
+                    localIp = intent.getStringExtra("localIp");
+                    System.out.println("in IVIService");
+                    startService();
+                    broadcast();
+                }
+                else if(intent.getStringExtra("action").equals("stop")){
+                    stopService();
+                }
+            }
+        }).start();
+
         return START_STICKY;
+    }
+
+
+    private void broadcast() {
+        Intent intent = new Intent("BROADCAST");
+        intent.putExtra("runtime",runtime);
+        intent.putExtra("in_bytes_per_second",in_bytes_per_second);
+        intent.putExtra("out_bytes_per_second",out_bytes_per_second);
+        intent.putExtra("in_packets",in_packets);
+        intent.putExtra("out_packets",out_packets);
+        intent.putExtra("in_bytes",in_bytes);
+        intent.putExtra("out_bytes",out_bytes);
+        intent.putExtra("address",localVirtualAddr.getHostAddress());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private void startService(){
@@ -112,7 +163,6 @@ public class IVIService extends VpnService {
             InetAddress dns1 = InetAddress.getByAddress(addr);
             addr = readBytes(4);
             InetAddress dns2 = InetAddress.getByAddress(addr);
-
             int protectSocket = readInt();
             protect(protectSocket);
             vpnInterface = new Builder()
@@ -130,10 +180,37 @@ public class IVIService extends VpnService {
             e.printStackTrace();
             return;
         }
+        System.out.println("begin ivi timer!");
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            public void run() {
+                runtime++;
+                System.out.println("in ivi service : runtime:"+runtime);
+                try {
+                    long in_bytes_before = in_bytes;
+                    long out_bytes_before = out_bytes;
+                    in_bytes = getBytes(readStream);
+                    out_bytes = getBytes(readStream);
+                    in_packets = getBytes(readStream);
+                    out_packets = getBytes(readStream);
+                    in_bytes_per_second = in_bytes - in_bytes_before;
+                    out_bytes_per_second = out_bytes - out_bytes_before;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                broadcast();
+            }
+        };
+        timer.schedule(timerTask,1000,1000);
 
     }
 
     private void stopService(){
+        if(timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+
         try {
             if (vpnInterface != null)
                 vpnInterface.close();

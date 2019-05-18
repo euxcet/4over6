@@ -1,11 +1,16 @@
 package com.java.liuyingtian.ivi;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.VpnService;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,8 +26,10 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +50,20 @@ public class MainActivity extends AppCompatActivity {
     private Timer timer;
     private boolean configured = false;
 
+    private TimerTask timerTask;
+    private Handler handler;
+
+    private long start_time = 0;
+
+    private long runtime = 0;//运行时长
+    private long in_bytes_per_second;//每秒下载字节数
+    private long out_bytes_per_second;//每秒上传字节数
+    private long in_packets;//下载包数
+    private long out_packets;//上传包数
+    private long in_bytes;//下载总字节数
+    private long out_bytes;//上传总字节数
+    private String ipv4_addr;
+
     enum VpnState{DISCONNECTED, CONNECTING, CONNECTED}
     private VpnState vpnState = VpnState.DISCONNECTED;
 
@@ -56,6 +77,23 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNI();
 
+    private BroadcastReceiver ivi_service_receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("BROADCAST")) {
+                runtime = intent.getLongExtra("runtime",0);
+                in_bytes_per_second = intent.getLongExtra("in_bytes_per_second",0);
+                out_bytes_per_second = intent.getLongExtra("out_bytes_per_second",0);
+                in_bytes = intent.getLongExtra("in_bytes",0);
+                out_bytes = intent.getLongExtra("out_bytes",0);
+                in_packets = intent.getLongExtra("in_packets",0);
+                out_packets = intent.getLongExtra("out_packets",0);
+                ipv4_addr = intent.getStringExtra("address");
+            }
+            updateConnectingInformation();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +101,39 @@ public class MainActivity extends AppCompatActivity {
         context = getApplicationContext();
         layoutInit();
         init();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("BROADCAST");
+        LocalBroadcastManager.getInstance(this).registerReceiver(ivi_service_receiver,intentFilter);
     }
 
     private void updateInformation(){
         String info = "Local IP: " + mLocalIpv6Address + "\nServer IP: " + mServerIpv6Address + "\nServer Port: " + mServerPort;
         informationText.setText(info);
+    }
+
+    private void updateConnectingInformation() {
+        String info = "Local IP(v6): " + mLocalIpv6Address + "\nServer IP(v4): " + ipv4_addr + "\nServer Port: " + mServerPort;
+        info += "\nRuntime:"+time(runtime)+"\nUpload Speed:"+out_bytes_per_second+"bytes/s"+"\nDownload Speed:"+in_bytes_per_second+"bytes/s"
+                +"\nUpload Bytes:"+out_bytes+" Upload Packets:"+out_packets+"\nDownload Bytes:"+in_bytes+" Download Packets:"+in_packets;
+        informationText.setText(info);
+    }
+
+    private String time(long r) {
+        long h = r / 3600;
+        long min = (r % 3600)/60;
+        long s = r % 60;
+        if(h == 0) {
+            if(min == 0) {
+                return s+"s";
+            }
+            else {
+                return min+" min "+s+" s";
+            }
+        }
+        else {
+            return h+" h "+min+" min "+s+" s";
+        }
     }
 
     public void updateVpnState(VpnState state){
@@ -143,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 0);
         }
         else{
+            updateVpnState(VpnState.CONNECTING);
             onActivityResult(0, RESULT_OK, null);
         }
     }
@@ -150,9 +217,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int request, int result, Intent data){
         super.onActivityResult(request, result, data);
         if(result == RESULT_OK){
-            if(configured)
+            if(configured) {
                 startVpnService();
-            else{
+            } else{
                 Toast.makeText(context, "Empty Config", Toast.LENGTH_SHORT).show();
             }
         }
@@ -171,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, IVIService.class);
         intent.putExtra("action", "stop");
         startService(intent);
+        updateVpnState(VpnState.DISCONNECTED);
     }
 
     private void init(){
@@ -183,7 +251,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTimer(){
-
+        System.out.println("in timer");
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if(vpnState == VpnState.CONNECTING)
+                    start_time++;
+                System.out.println("in main activity : runtime:"+runtime);
+            }
+        };
     }
 
     private void checkInternetStatus(){
