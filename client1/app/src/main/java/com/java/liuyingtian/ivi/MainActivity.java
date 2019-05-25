@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -26,8 +25,6 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 
 public class MainActivity extends AppCompatActivity{
     static {
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity{
                 connect.setEnabled(false);
                 restart.setEnabled(false);
                 confirm.setEnabled(false);
-
                 stopVPNService();
                 prepareVPNService();
             }
@@ -165,11 +161,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         context = this;
         layoutInit();
-
         intentFilter = new IntentFilter();
         intentFilter.addAction(IVIService.BROADCAST_STATE);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(vpnReceiver, intentFilter);
-//        registerReceiver(vpnReceiver, intentFilter);
     }
 
     @Override
@@ -227,7 +220,7 @@ public class MainActivity extends AppCompatActivity{
         serverPortShow.setText("" + server_port);
         localAllocatedIpShow.setText(virtual_ipv4_addr);
 
-        connectTime.setText(int2time(running_time));
+        connectTime.setText(time(running_time));
         uploadFlow.setText(Formatter.formatShortFileSize(context, out_bytes));
         uploadSpeed.setText(Formatter.formatShortFileSize(context, out_speed_bytes));
         uploadPackets.setText(Formatter.formatShortFileSize(context, out_packets));
@@ -245,10 +238,12 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private String int2time(long duration) {
-        long second = duration % 60;
-        long minute = (duration / 60) % 60;
-        long hour = duration / 3600;
+    private String time(long inttime) {
+        long second = inttime % 60;
+        inttime /= 60;
+        long minute = inttime % 60;
+        inttime /= 60;
+        long hour = inttime;
         return String.format("%d:%02d:%02d", hour, minute, second);
     }
 
