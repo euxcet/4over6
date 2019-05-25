@@ -1,94 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-<TextView
-    android:id="@+id/textView2"
-    android:layout_width="68dp"
-    android:layout_height="17dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginLeft="8dp"
-    android:text="Server IP"
-    app:layout_constraintBottom_toBottomOf="@+id/server_ip"
-    app:layout_constraintEnd_toStartOf="@+id/server_ip"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/server_ip" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-<EditText
-    android:id="@+id/server_ip"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="92dp"
-    android:layout_marginEnd="60dp"
-    android:layout_marginRight="60dp"
-    android:ems="10"
-    android:inputType="textPersonName"
-    android:text="2607:5501:3000:f36::2"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content">
 
-<TextView
-    android:id="@+id/textView3"
-    android:layout_width="77dp"
-    android:layout_height="20dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginLeft="8dp"
-    android:text="Server Port"
-    app:layout_constraintBottom_toBottomOf="@+id/server_port"
-    app:layout_constraintEnd_toStartOf="@+id/server_port"
-    app:layout_constraintHorizontal_bias="1.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/server_port"
-    app:layout_constraintVertical_bias="0.56" />
+            <TextView
+                android:id="@+id/server_ip_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Server IP" />
 
-<EditText
-    android:id="@+id/server_port"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="28dp"
-    android:ems="10"
-    android:inputType="textPersonName"
-    android:text="8192"
-    app:layout_constraintEnd_toEndOf="@+id/server_ip"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="@+id/server_ip"
-    app:layout_constraintTop_toBottomOf="@+id/server_ip" />
+            <EditText
+                android:id="@+id/server_ip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="server ip"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/server_port_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Server Port" />
 
-<Button
-    android:id="@+id/confirm"
-    android:layout_width="205dp"
-    android:layout_height="45dp"
-    android:layout_marginTop="36dp"
-    android:text="Confirm"
-    app:layout_constraintEnd_toEndOf="@+id/server_port"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="@+id/server_port"
-    app:layout_constraintTop_toBottomOf="@+id/server_port" />
+            <EditText
+                android:id="@+id/server_port"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="server port"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-<Button
-    android:id="@+id/connect"
-    android:layout_width="205dp"
-    android:layout_height="45dp"
-    android:layout_marginTop="12dp"
-    android:text="Connect"
-    app:layout_constraintEnd_toEndOf="@+id/confirm"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="@+id/confirm"
-    app:layout_constraintTop_toBottomOf="@+id/confirm" />
+            <Button
+                android:id="@+id/connect_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Connect" />
+            <Button
+                android:id="@+id/restart_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Restart" />
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Confirm" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ip_information"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-<TextView
-    android:id="@+id/information"
-    android:layout_width="310dp"
-    android:layout_height="252dp"
-    android:layout_marginTop="12dp"
-    app:layout_constraintEnd_toEndOf="@+id/confirm"
-    app:layout_constraintHorizontal_bias="0.504"
-    app:layout_constraintStart_toStartOf="@+id/confirm"
-    app:layout_constraintTop_toBottomOf="@+id/connect" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/local_ipv6_addr_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Local Ipv6 Address" />
+
+                <TextView
+                    android:id="@+id/local_ipv6_addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/allocated_ip_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Allocated Ipv4 Address" />
+
+                <TextView
+                    android:id="@+id/allocated_ip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/server_ip_show_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Server Ipv6 Address" />
+
+                <TextView
+                    android:id="@+id/server_ip_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/server_port_show_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Server Port" />
+
+                <TextView
+                    android:id="@+id/server_port_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/flow_information"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/download_flow_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Download Flow" />
+
+                <TextView
+                    android:id="@+id/download_flow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0B" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/download_speed_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Download Speed" />
+
+                <TextView
+                    android:id="@+id/download_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0KB/s" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/download_packets_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Download Packets" />
+
+                <TextView
+                    android:id="@+id/download_packets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/upload_flow_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Upload Flow" />
+
+                <TextView
+                    android:id="@+id/upload_flow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0B" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/upload_speed_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Upload Speed" />
+
+                <TextView
+                    android:id="@+id/upload_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0KB/s" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/upload_packets_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Upload Packets" />
+
+                <TextView
+                    android:id="@+id/upload_packets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/connect_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Connect Time" />
+
+                <TextView
+                    android:id="@+id/connect_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="00:00:00" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
