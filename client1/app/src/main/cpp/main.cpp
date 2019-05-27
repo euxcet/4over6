@@ -20,11 +20,34 @@ static int tun_fd;
 
 static char sock_buf[SOCK_BUF_SIZE];
 static ssize_t sock_buf_off;
+
 time_t heart_beat_time;
+time_t last_send_heart_beat;
 uint64_t download_bytes;
 uint64_t upload_bytes;
 uint64_t download_packets;
 uint64_t upload_packets;
+
+//int buf_init(Buffer* buf, char* bufptr, size_t buflen){
+//    if(bufptr == NULL || buf == NULL || buflen <= 0) return -1;
+//    buf -> bufptr = bufptr;
+//    buf -> buflen = buflen;
+//    buf -> datalen = 0;
+//    buf -> readpos = 0;
+//    buf -> writepos = 0;
+//    return 0;
+//}
+//
+//int recv(int sock_fd, Buffer* buf, int len){
+//    ssize_t size = recv(sock_fd, sock_buf + sock_buf_off, SOCK_BUF_SIZE - sock_buf_off, 0);
+//}
+//
+//int read(Buffer* src, char* dest, int len){
+//    
+//}
+//
+
+
 
 int write_pipe(unsigned char* buf, size_t write_size){
     return (int)write(back_write_fd, buf, write_size);
@@ -224,6 +247,7 @@ int backend_main(const char* server_ip, int server_port, int backend_read_fd, in
     tun_fd = 0;
     sock_buf_off = 0;
     heart_beat_time = time(NULL);
+    last_send_heart_beat = time(NULL);
     download_bytes = 0L;
     upload_bytes = 0L;
     download_packets = 0L;
@@ -252,13 +276,14 @@ int backend_main(const char* server_ip, int server_port, int backend_read_fd, in
             fds.push_back(temp);
         }
 
-        if(time(NULL) - heart_beat_time > HEART_BEAT_INTERVAL){
+        if(time(NULL) - last_send_heart_beat > HEART_BEAT_INTERVAL){
             Message msg;
             msg.type = HEARTBEAT;
             msg.length = sizeof(Message);
             ASSERT(send(sock_fd, &msg, sizeof(Message), 0) == sizeof(Message), fail);
             upload_bytes += sizeof(Message);
             upload_packets += 1;
+            last_send_heart_beat = time(NULL);
         }
 
         int active_count;

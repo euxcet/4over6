@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity{
     private EditText serverIp, serverPort;
     private TextView uploadPackets, downloadPackets, connectTime, uploadSpeed, downloadSpeed, uploadFlow, downloadFlow;
     private TextView serverIpShow, serverPortShow, localIpv6AddrShow, localAllocatedIpShow;
-    private Button confirm, connect, restart;
+    private Button confirm, connect;// , restart;
     private IntentFilter intentFilter;
 
     private  void layoutInit(){
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity{
         connectTime = findViewById(R.id.connect_time);
         confirm = findViewById(R.id.confirm_button);
         connect = findViewById(R.id.connect_button);
-        restart = findViewById(R.id.restart_button);
+//        restart = findViewById(R.id.restart_button);
         localIpv6AddrShow = findViewById(R.id.local_ipv6_addr);
         localAllocatedIpShow = findViewById(R.id.allocated_ip);
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 connect.setEnabled(false);
-                restart.setEnabled(false);
+//                restart.setEnabled(false);
                 confirm.setEnabled(false);
 
                 if (running_state == 0) {
@@ -87,16 +87,16 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        restart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                connect.setEnabled(false);
-                restart.setEnabled(false);
-                confirm.setEnabled(false);
-                stopVPNService();
-                prepareVPNService();
-            }
-        });
+//        restart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                connect.setEnabled(false);
+//                restart.setEnabled(false);
+//                confirm.setEnabled(false);
+//                stopVPNService();
+//                prepareVPNService();
+//            }
+//        });
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity{
                 MainActivity.this.out_speed_bytes = intent.getLongExtra("out_speed_bytes", 0);
                 MainActivity.this.running_time = intent.getLongExtra("running_time", 0);
                 connect.setEnabled(true);
-                restart.setEnabled(true);
+//                restart.setEnabled(true);
             }
             updateUI();
         }
@@ -223,18 +223,18 @@ public class MainActivity extends AppCompatActivity{
         connectTime.setText(time(running_time));
         uploadFlow.setText(Formatter.formatShortFileSize(context, out_bytes));
         uploadSpeed.setText(Formatter.formatShortFileSize(context, out_speed_bytes));
-        uploadPackets.setText(Formatter.formatShortFileSize(context, out_packets));
+        uploadPackets.setText(String.valueOf(out_packets));
 
         downloadFlow.setText(Formatter.formatShortFileSize(context, in_bytes));
         downloadSpeed.setText(Formatter.formatShortFileSize(context, in_speed_bytes));
-        downloadPackets.setText(Formatter.formatShortFileSize(context, in_packets));
+        downloadPackets.setText(String.valueOf(in_packets));
 
         if (running_state == 0) {
             confirm.setEnabled(true);
-            restart.setEnabled(false);
+//            restart.setEnabled(false);
         } else {
             confirm.setEnabled(false);
-            restart.setEnabled(true);
+//            restart.setEnabled(true);
         }
     }
 

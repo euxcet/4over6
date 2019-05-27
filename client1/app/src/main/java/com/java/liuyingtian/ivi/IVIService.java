@@ -157,12 +157,10 @@ public class IVIService extends VpnService {
 
         backendThread = new Thread(new BackendThread(hostname, port, backendReadFd.getFd(), backendWriteFd.getFd()));
         backendThread.start();
-        System.out.println(1111);
 
         writeStream = new DataOutputStream(new FileOutputStream(frontendWriteFd.getFileDescriptor()));
         readStream = new DataInputStream(new FileInputStream(frontendReadFd.getFileDescriptor()));
 
-        // 初始化配置
         try {
             System.out.println("read socket");
             int socketFd = readInt(readStream);
@@ -185,7 +183,7 @@ public class IVIService extends VpnService {
                     .addDnsServer(dns2)
                     .addDnsServer(dns3)
                     .addRoute("0.0.0.0", 0)
-                    .setSession("overover")
+                    .setSession("ivi")
                     .establish();
             writeStream.writeByte(SET_TUN);
             writeInt(writeStream, vpnInterface.getFd());

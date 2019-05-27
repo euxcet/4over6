@@ -29,6 +29,17 @@ struct Message{
     char type;
 }__attribute__((packed));
 
+//struct Buffer{
+//    char* bufptr;
+//    size_t buflen;
+//    size_t datalen;
+//    size_t readpos;
+//    size_t writepos;
+//};
+
+//int buf_init(Buffer* buf, char* bufptr, size_t buflen);
+//int read(int fd, Buffer* buf, int len);
+
 int backend_main(const char* server_ip, int server_port, int backend_read_fd, int backend_write_fd);
 int socket_init(const char* server_ip, int server_port);
 

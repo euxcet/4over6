@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    android:theme="@style/AppTheme.NoActionBar"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -13,22 +15,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="50dp"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/server_ip_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Server IP" />
+                android:textColor="#ffffff"
+                android:text="Server IP"
+                android:textStyle="bold"
+                />
 
             <EditText
                 android:id="@+id/server_ip"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="server ip"/>
+                android:textColor="#ffffff"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,17 +41,20 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/server_port_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
                 android:text="Server Port" />
 
             <EditText
                 android:id="@+id/server_port"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="server port"/>
+                android:textColor="#ffffff"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,97 +66,120 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
+                android:background="@drawable/shape"
+                android:textColor="#ffffff"
+                android:layout_margin="20dp"
                 android:text="Connect" />
-            <Button
-                android:id="@+id/restart_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Restart" />
             <Button
                 android:id="@+id/confirm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
+                android:background="@drawable/shape"
+                android:textColor="#ffffff"
+                android:layout_margin="20dp"
                 android:text="Confirm" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ip_information"
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:layout_margin="20dp"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/local_ipv6_addr_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Local Ipv6 Address" />
 
                 <TextView
                     android:id="@+id/local_ipv6_addr"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/allocated_ip_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Allocated Ipv4 Address" />
 
                 <TextView
                     android:id="@+id/allocated_ip"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/server_ip_show_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Server Ipv6 Address" />
 
                 <TextView
                     android:id="@+id/server_ip_show"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/server_port_show_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Server Port" />
 
                 <TextView
                     android:id="@+id/server_port_show"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="" />
             </LinearLayout>
         </LinearLayout>
@@ -156,136 +187,172 @@
             android:id="@+id/flow_information"
             android:layout_width="match_parent"
             android:orientation="vertical"
+            android:layout_margin="20dp"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/download_flow_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Download Flow" />
 
                 <TextView
                     android:id="@+id/download_flow"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="0B" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/download_speed_text"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Download Speed" />
 
                 <TextView
                     android:id="@+id/download_speed"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="0KB/s" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/download_packets_text"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Download Packets" />
 
                 <TextView
                     android:id="@+id/download_packets"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="0" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/upload_flow_text"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Upload Flow" />
 
                 <TextView
                     android:id="@+id/upload_flow"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:textColor="#ffffff"
                     android:text="0B" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/upload_speed_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Upload Speed" />
 
                 <TextView
                     android:id="@+id/upload_speed"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="0KB/s" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/upload_packets_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Upload Packets" />
 
                 <TextView
                     android:id="@+id/upload_packets"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#ffffff"
                     android:text="0" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/connect_time_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
                     android:text="Connect Time" />
 
                 <TextView
                     android:id="@+id/connect_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="00:00:00" />
+                    android:textColor="#ffffff"
+                    android:text="0:00:00" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
