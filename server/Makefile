@@ -1,5 +1,2 @@
-all: main.c
-	gcc main.c -o main
-
-clean:
-	rm *.o
+all: main.cpp
+	g++ main.cpp -o main -std=c++11
